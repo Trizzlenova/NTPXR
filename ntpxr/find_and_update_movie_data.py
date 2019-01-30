@@ -24,7 +24,7 @@ for div in main.findAll('div'):
     for span in li.findAll('span', {'class': "nm-collections-title-name"}):
       data.append(span.text)
 
-data = list(set(data))[:1]
+data = list(set(data))[:0]
 # =====================================
 
 

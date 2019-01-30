@@ -11,19 +11,25 @@ body, .card-body {
 
 #replacement {
   height: 100vh;
+  margin: 0 auto;
 }
 
 #title {
   text-align: center;
-  font-size: 4em
+  font-size: 2em;
 }
 
 select {
   background-color: #9d7e88;
   width: 100%;
   height: 2em;
-  padding: 0;
-  margin: 0;
+  font-size: 1.5em;
+  text-indent: 5px;
+}
+
+option {
+  margin: 0 auto;
+  width: 100%;
 }
 
 img.card-img-top {

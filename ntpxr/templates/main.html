@@ -25,16 +25,14 @@
         <form>
          <fieldset>
             <p>
-               <label>Genre</label>
-               <select id = "genre">
-                 <option value = "Comedy">Comedy</option>
-                 <option value = "Drama">Drama</option>
-                 <option value = "Documentary">Documentary</option>
-               </select>
+              <!-- <label>Genre</label> -->
+              <select id='genre_list'></select>
+              <!-- <option value='' disabled selected>Genre</option> -->
             </p>
             <p>
-               <label>Rating</label>
+               <!-- <label>Rating</label> -->
                <select id = "rating">
+                <option value="" disabled selected>Rating</option>
                  <option value = "9">9+</option>
                  <option value = "8">8+</option>
                  <option value = "7">7+</option>
@@ -58,10 +56,29 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript">
+
+
+
     var movieApi = document.getElementById('movieApi')
     var extra = document.getElementById('extra')
     var card = document.getElementsByTagName('img')
     var title = document.getElementById('title')
+    var genre_list = document.getElementById('genre_list')
+
+    function load_genre_list() {
+      axios.get('/genre/api')
+      .then(function(response) {
+        data = response.data
+        for(i in data) {
+          var node = document.createElement('option')
+          var textnode = document.createTextNode(data[i].category)
+          node.appendChild(textnode)
+          genre_list.appendChild(node)
+        }
+      })
+    }
+
+    load_genre_list()
 
     function randomizer(arr) {
       var random = Math.floor(Math.random() * arr.length)
@@ -71,20 +88,6 @@
       card[0].src = content
     }
 
-  //   function randomizer(arr) {
-  //     var random = Math.floor(Math.random() * arr.length)
-  //     card[0].innerHTML = ""
-  //     var content = `<div class="card" style="width: 18rem;">
-  //   <img class="card-img-top" src=${arr[random].image} alt="Card image cap">
-  //   <div class="card-body">
-  //     <form>
-  //      <h1>${arr[random].title}</h1>
-  //   </form>
-  //   <div id='extra'></div>
-  //   </div>
-  // </div>`
-  //       card[0].innerHTML += content
-  //   }
 
     movieApi.addEventListener('click', function(e) {
       e.preventDefault()
@@ -93,7 +96,7 @@
         data = response.data
         var chosenMovies = []
         for(i in data) {
-          if(data[i].genre.indexOf(genre.value) !== -1 && parseInt(data[i].rating) > parseInt(rating.value)) {
+          if(data[i].genre.indexOf(genre_list.value) !== -1 && parseInt(data[i].rating) > parseInt(rating.value)) {
               chosenMovies.push(data[i])
           }
         }
