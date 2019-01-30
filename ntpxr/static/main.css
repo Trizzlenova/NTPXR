@@ -1,0 +1,18 @@
+body {
+  color: #777696;
+  font-family: 'Righteous', cursive;
+}
+
+.card {
+  width: 100%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6em;
+}
+
+select {
+  background-color: #9d7e88;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <title>NTPXR</title>
+</head>
+<body>
+  <div id="title">NTPXR</div>
+  <!-- <div class='movie-title'>
+    {% for movie in movies %}
+      <h1> {{ movie.title }} </h1>
+    {% endfor %}
+  </div> -->
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="https://www.onlygfx.com/wp-content/uploads/2017/11/grunge-question-mark-8.png" alt="Card image cap">
+    <div class="card-body">
+      <form>
+       <fieldset>
+          <p>
+             <label>Genre</label>
+             <select id = "genre">
+               <option value = "Comedy">Comedy</option>
+               <option value = "Drama">Drama</option>
+               <option value = "Documentary">Documentary</option>
+             </select>
+          </p>
+          <p>
+             <label>Rating</label>
+             <select id = "rating">
+               <option value = "9">9+</option>
+               <option value = "8">8+</option>
+               <option value = "7">7+</option>
+               <option value = "6">6+</option>
+               <option value = "1">5-1</option>
+             </select>
+          </p>
+          <p>
+            <button class="btn btn-outline-info" id='movieApi'>movie</button>
+          </p>
+       </fieldset>
+    </form>
+    <div id='extra'></div>
+    </div>
+  </div>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+    var movieApi = document.getElementById('movieApi')
+    var extra = document.getElementById('extra')
+    var card = document.getElementsByClassName('card')
+    console.log(card[0])
+
+    // function randomizer(arr) {
+    //   var random = Math.floor(Math.random() * arr.length)
+    //   extra.innerHTML = ""
+    //   var content = `<div id="content">
+    //     <h2 id="firstHeading" class="firstHeading">${arr[random].title}</h2>
+    //     <div id="bodyContent">'
+    //     <img src="${arr[random].image}"/>
+    //     </div>
+    //     </div>`
+    //     extra.innerHTML += content
+    // }
+
+    function randomizer(arr) {
+      var random = Math.floor(Math.random() * arr.length)
+      card[0].innerHTML = ""
+      var content = `<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src=${arr[random].image} alt="Card image cap">
+    <div class="card-body">
+      <form>
+       <h1>${arr[random].title}</h1>
+    </form>
+    <div id='extra'></div>
+    </div>
+  </div>`
+        card[0].innerHTML += content
+    }
+
+    // `<div id='content class="card" style="width: 18rem;">
+    //    <img class="card-img-top" src="${arr[random].image}" alt="Card image cap">
+    //    <div class="card-body">
+    //      <h1>${arr[random].title}</h1>
+    //    </div>
+    //  </div>`
+
+    movieApi.addEventListener('click', function(e) {
+      e.preventDefault()
+      axios.get('/movies/api')
+      .then(function(response) {
+        data = response.data
+        print(data)
+        var chosenMovies = []
+        for(var i = 0; i < data.length - 1 ; i++) {
+          // console.log(response.data[i].genre)
+          if(data[i].genre.indexOf(genre.value) !== -1 && parseInt(data[i].rating) > parseInt(rating.value)) {
+              chosenMovies.push(data[i])
+          }
+        }
+        console.log(chosenMovies)
+        return randomizer(chosenMovies)
+      })
+      .catch(function(err){
+        console.log(err)
+      });
+    })
+
+  </script>
+  <!-- <script src="{{ url_for('static', filename='main.py') }}"></script> -->
+</body>
+</html>
