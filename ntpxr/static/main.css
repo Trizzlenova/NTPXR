@@ -1,18 +1,39 @@
-body {
-  color: #777696;
+body, .card-body {
+  color: white;
+  background-color: #777696;
   font-family: 'Righteous', cursive;
 }
 
-.card {
+.card, fieldset, button, #replacement {
   width: 100%;
   margin: 0 auto;
 }
 
-h1 {
+#replacement {
+  height: 100vh;
+}
+
+#title {
   text-align: center;
-  font-size: 1.6em;
+  font-size: 4em
 }
 
 select {
   background-color: #9d7e88;
+  width: 100%;
+  height: 2em;
+  padding: 0;
+  margin: 0;
+}
+
+img.card-img-top {
+  height: 25rem;
+}
+
+label, p {
+  text-align: center;
+}
+
+label {
+  font-size: 2em;
 }

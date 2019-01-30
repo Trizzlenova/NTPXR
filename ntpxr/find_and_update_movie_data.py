@@ -12,9 +12,9 @@ def randomizer(arr):
 
 # =====================================
 # grab the data
-data = requests.get('https://www.netflix.com/browse/genre/6548?bc=34399')
+movie_url = requests.get('https://www.netflix.com/browse/genre/34399?so=az')
 
-soup = BeautifulSoup(data.text, 'html.parser')
+soup = BeautifulSoup(movie_url.text, 'html.parser')
 
 data = []
 main = soup.find('div', {'id': 'appMountPoint'})
@@ -24,11 +24,11 @@ for div in main.findAll('div'):
     for span in li.findAll('span', {'class': "nm-collections-title-name"}):
       data.append(span.text)
 
-data = list(set(data))[:10]
+data = list(set(data))[:1]
 # =====================================
 
 
-db.drop_all()
+# db.drop_all()
 db.create_all()
 
 # =====================================
@@ -47,7 +47,7 @@ def genre_validator(cat):
       add_genre_to_db = Genre(category = g)
       db.session.add(add_genre_to_db)
       db.session.commit()
-      print(f'adding {g} to Genre database: {Genre.query.all()}')
+      # print(f'adding {g} to Genre database: {Genre.query.all()}')
 
 
 # put in new folder inside the app directory.
@@ -73,7 +73,7 @@ for film in data:
         movie_id = db.session.query(Movie.id).filter_by(title=movie_db_info['Title']).scalar()
         grab_movie_model = Movie.query.get(movie_id)
         grab_genre_model.movie_list.append(grab_movie_model)
-        print(f"adding {movie_db_info['Title']} to {grab_genre_model}")
+        # print(f"adding {movie_db_info['Title']} to {grab_genre_model}")
     except:
       pass
 

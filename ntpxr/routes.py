@@ -6,6 +6,7 @@ from ntpxr.find_and_update_movie_data import *
 @app.route('/home')
 def home():
   movies = Movie.query.all()
+  genre = Genre.query.all()
   return render_template('main.html', movies=movies)
 
 @app.route("/movies/api", methods=["GET"])
